@@ -106,6 +106,12 @@
   dependencies:
     less "^3.0.4"
 
+"@tarojs/plugin-sass@^1.2.13":
+  version "1.2.13"
+  resolved "http://registry.npm.taobao.org/@tarojs/plugin-sass/download/@tarojs/plugin-sass-1.2.13.tgz#c2152159572e7c22d115087da12d53489a8c3972"
+  dependencies:
+    node-sass "^4.11.0"
+
 "@tarojs/plugin-uglifyjs@1.2.12":
   version "1.2.12"
   resolved "http://registry.npm.taobao.org/@tarojs/plugin-uglifyjs/download/@tarojs/plugin-uglifyjs-1.2.12.tgz#64b52194d7ef7f6f4e76d5135c45d4f956c3c1dd"
@@ -220,7 +226,7 @@
   version "15.5.9"
   resolved "http://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.5.9.tgz#f2d14df87b0739041bc53a7d75e3d77d726a3ec0"
 
-"@types/react@^16.4.6":
+"@types/react@^16.4.6", "@types/react@^16.7.3":
   version "16.8.3"
   resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.8.3.tgz#7b67956f682bea30a5a09b3242c0784ff196c848"
   dependencies:
@@ -1252,6 +1258,10 @@ binary-extensions@^1.0.0:
   version "1.13.0"
   resolved "http://registry.npm.taobao.org/binary-extensions/download/binary-extensions-1.13.0.tgz#9523e001306a32444b907423f1de2164222f6ab1"
 
+bind-decorator@^1.0.11:
+  version "1.0.11"
+  resolved "http://registry.npm.taobao.org/bind-decorator/download/bind-decorator-1.0.11.tgz#e41bc06a1f65dd9cec476c91c5daf3978488252f"
+
 block-stream@*:
   version "0.0.9"
   resolved "http://registry.npm.taobao.org/block-stream/download/block-stream-0.0.9.tgz#13ebfe778a03205cfe03751481ebb4b3300c126a"
@@ -1578,7 +1588,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "http://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
@@ -1978,6 +1988,10 @@ dashdash@^1.12.0:
 date-now@^0.1.4:
   version "0.1.4"
   resolved "http://registry.npm.taobao.org/date-now/download/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
+
+dayjs@^1.7.7, dayjs@^1.8.6:
+  version "1.8.6"
+  resolved "http://registry.npm.taobao.org/dayjs/download/dayjs-1.8.6.tgz#b7a8ccfef173dae03e83a05a58788c9dbe948a35"
 
 debug@*, debug@^4.1.0:
   version "4.1.1"
@@ -4277,7 +4291,7 @@ node-forge@0.7.5:
   version "0.7.5"
   resolved "http://registry.npm.taobao.org/node-forge/download/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
 
-node-gyp@^3.3.1:
+node-gyp@^3.3.1, node-gyp@^3.8.0:
   version "3.8.0"
   resolved "http://registry.npm.taobao.org/node-gyp/download/node-gyp-3.8.0.tgz#540304261c330e80d0d5edce253a68cb3964218c"
   dependencies:
@@ -4357,6 +4371,30 @@ node-sass@4.8.3:
     node-gyp "^3.3.1"
     npmlog "^4.0.0"
     request "~2.79.0"
+    sass-graph "^2.2.4"
+    stdout-stream "^1.4.0"
+    "true-case-path" "^1.0.2"
+
+node-sass@^4.11.0:
+  version "4.11.0"
+  resolved "http://registry.npm.taobao.org/node-sass/download/node-sass-4.11.0.tgz#183faec398e9cbe93ba43362e2768ca988a6369a"
+  dependencies:
+    async-foreach "^0.1.3"
+    chalk "^1.1.1"
+    cross-spawn "^3.0.0"
+    gaze "^1.0.0"
+    get-stdin "^4.0.1"
+    glob "^7.0.3"
+    in-publish "^2.0.0"
+    lodash.assign "^4.2.0"
+    lodash.clonedeep "^4.3.2"
+    lodash.mergewith "^4.6.0"
+    meow "^3.7.0"
+    mkdirp "^0.5.1"
+    nan "^2.10.0"
+    node-gyp "^3.8.0"
+    npmlog "^4.0.0"
+    request "^2.88.0"
     sass-graph "^2.2.4"
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
@@ -5232,7 +5270,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@^2.83.0, request@^2.87.0:
+request@^2.83.0, request@^2.87.0, request@^2.88.0:
   version "2.88.0"
   resolved "http://registry.npm.taobao.org/request/download/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   dependencies:
@@ -5988,6 +6026,17 @@ tar@^4:
     mkdirp "^0.5.0"
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
+
+taro-ui@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/taro-ui/download/taro-ui-2.0.0.tgz#53c1de7bd48b9ea1b51977744a0bed6f971eb680"
+  dependencies:
+    "@types/react" "^16.7.3"
+    bind-decorator "^1.0.11"
+    classnames "^2.2.6"
+    dayjs "^1.7.7"
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
 
 text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"

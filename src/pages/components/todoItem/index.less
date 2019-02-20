@@ -1,10 +1,55 @@
 .todo_item {
-  width: 80%;
-  height: 66PX;
-  line-height: 66PX;
-  margin: 20PX auto;
-  background: #dfe2e2;
-  border-radius: 20PX;
-  box-shadow: 0 15PX 30PX 0 rgba(0,0,0,0.11),
-            0 5PX 15PX 0 rgba(0,0,0,0.08);
+  margin: 20px auto;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+    0 5px 15px 0 rgba(0, 0, 0, 0.08);
+
+  .item {
+    .content {
+      display: block;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      font-size: 40px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+    }
+
+    .info {
+      font-size: 35px;
+      display: block;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 10px;
+
+      .date_time,
+      .rate {
+        display: inline-block;
+      }
+
+      .rate {
+        margin-right: 10px;
+
+        .star {
+          display: inline-block;
+          padding-left: 30px;
+          vertical-align: bottom;
+        }
+      }
+
+      .date_time {
+        margin-left: 10px;
+
+        .text {
+          display: inline-block;
+          padding-left: 20px;
+          vertical-align: bottom;
+        }
+      }
+    }
+    .finish {
+      display: flex;
+      background: #FFCA3E;
+      justify-content: center;
+      color: #fff;
+    }
+  }
 }
