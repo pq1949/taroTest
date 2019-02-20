@@ -7,22 +7,7 @@ export default class TodoItem extends Component {
 
   static defaultProps = {
     onItemFinish: () => { },
-    options: [
-      {
-        action: 'cancel',
-        text: '取消',
-        style: {
-          backgroundColor: '#6190E8'
-        }
-      },
-      {
-        action: 'finish',
-        text: '完成',
-        style: {
-          backgroundColor: '#FF4949'
-        }
-      }
-    ],
+    name: null,
     content: '背单词100个！',
     date: '2019-2-19',
     time: '12:30',
@@ -30,16 +15,40 @@ export default class TodoItem extends Component {
     color: '#45aaf2'
   }
 
+  constructor () {
+    super(...arguments)
+    this.state = {
+      animationData: {}
+    }
+  }
+
+  componentDidMount () {
+    const animation = Taro.createAnimation({
+      duration: 300,
+      timingFunction: 'ease'
+    });
+    this.animation = animation
+  }
+
+  finishItem () {
+    this.animation.translateX('-110%').step()
+    this.setState({
+      animationData: this.animation.export()
+    })
+    setTimeout(() => {
+      this.props.onItemFinish(this.props.name)
+    }, 300)
+  }
   render () {
-    const { options, content, date, time, rate, color } = this.props
+    const { content, date, time, rate, color } = this.props
     return (
-      <View className='todo_item' >
+      <View className='todo_item' animation={this.state.animationData} >
         <View className='item' style={{ background: color }}>
           <View className='content'>{content}</View>
           <View className='info'>
             <View className='date_time'>
               <AtIcon value='calendar' size='25' ></AtIcon>
-              <Text className='text'>{date} {time}</Text>
+              <Text className='text'>{`${date} ${time}`}</Text>
             </View>
             <View className='rate'>
               <AtIcon value='tags' size='25' ></AtIcon>
@@ -48,7 +57,7 @@ export default class TodoItem extends Component {
               </View>
             </View>
           </View>
-          <View className='finish' >
+          <View className='finish' onClick={this.finishItem}>
             <AtIcon value='check' size='25' ></AtIcon>
           </View>
         </View>

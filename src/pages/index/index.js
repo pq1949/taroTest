@@ -48,7 +48,7 @@ export default class Index extends Component {
           <SwiperItem >
             <View>历史</View>
           </SwiperItem>
-          <SwiperItem catchtouchmove>
+          <SwiperItem >
             <View>我的</View>
           </SwiperItem>
         </Swiper>

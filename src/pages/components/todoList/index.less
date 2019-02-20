@@ -1,5 +1,6 @@
 .todo_list {
   height: calc(100% - 130px);
+  width: 100%;
   overflow: scroll;
 
   .add_task_button {
@@ -41,8 +42,13 @@
       display: inline-block;
     }
   }
-}
 
-.at-float-layout .layout-body__content {
-  min-height: 100px !important;
+  .empty {
+    height: 100%;
+    display: flex;
+    color: #ccc;
+    font-size: 30px;
+    justify-content: center;
+    align-items: center;
+  }
 }

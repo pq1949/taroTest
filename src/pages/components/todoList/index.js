@@ -13,11 +13,26 @@ export default class TodoList extends Component {
       isOpened: false,
       time: dayjs().add(90, 'minute').format('HH:mm'),
       date: dayjs().add(90, 'minute').isAfter(dayjs(), 'day') ? dayjs().add(1, 'day').format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
-      rate: 0
+      rate: 0,
+      items: []
     }
   }
 
   componentDidMount () {
+    // const t = []
+    // for (let i = 0; i < 0; i++) {
+    //   t.push({
+    //     id: i,
+    //     content: `背单词${100 + i}个！`,
+    //     date: '2019-2-19',
+    //     time: '12:30',
+    //     rate: 2,
+    //     color: '#45aaf2'
+    //   })
+    // }
+    // this.setState({
+    //   items: t
+    // })
 
   }
 
@@ -32,16 +47,12 @@ export default class TodoList extends Component {
   }
 
   onTimeChange (timeObj) {
-    console.log(timeObj)
-    console.log(timeObj.detail)
     this.setState({
       time: timeObj.detail.value
     })
   }
 
   onDateChange (timeObj) {
-    console.log(timeObj)
-    console.log(timeObj.detail)
     this.setState({
       date: timeObj.detail.value
     })
@@ -52,13 +63,34 @@ export default class TodoList extends Component {
   }
 
   addTask () {
-
+    console.log('111')
+    const { value, time, date, rate } = this.state
+    if (value) {
+      console.log(this.state)
+      this.setState(preState => ({
+        items: preState.items.concat({
+          id: Date.now(),
+          content: value,
+          date,
+          time,
+          rate,
+          color: '#45aaf2'
+        }),
+        isOpened: false
+      }))
+    }
   }
 
+  onItemFinish (id) {
+    this.setState(preState => ({
+      items: preState.items.filter(item => item.id !== id)
+    }))
+  }
   render () {
+    console.log(this.state)
     return (
       <View className='todo_list'>
-        <View className='add_task_button' onClick={this.showAddTask}><AtIcon value='add' size='50' color='#fff'></AtIcon></View>
+        <View className='add_task_button' onClick={this.showAddTask} ><AtIcon value='add' size='50' color='#fff'></AtIcon></View>
         <AtFloatLayout className='float_layout' isOpened={this.state.isOpened} title='添加任务' onClose={this.showAddTask}>
           <AtInput
             clear
@@ -90,13 +122,23 @@ export default class TodoList extends Component {
           </View>
           <AtButton circle type='primary' onClick={this.addTask}>添加</AtButton>
         </AtFloatLayout>
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
-        <ToDoItem />
+        {
+          !this.state.items.length && <View className='empty'>还没有添加过任务~~</View>
+        }
+        {
+          this.state.items.map(item => (
+            <ToDoItem
+              key={item.id}
+              name={item.id}
+              onItemFinish={this.onItemFinish}
+              content={item.content}
+              date={item.date}
+              time={item.time}
+              rate={item.rate}
+              color={item.color}
+            />
+          ))
+        }
       </View>
     )
   }
