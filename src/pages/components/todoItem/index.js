@@ -23,7 +23,7 @@ export default class TodoItem extends Component {
         }
       }
     ],
-    content: 'qwew        qewqwe  wqewqqwe  qqw ewqewqqw     eqqwewqewqqweqqwewqewqqweqqqweqqwewqewqwewqewqqweqqwewqewqqweqqwewqewqqweqqwewqewqqweqqqweqqwewqewqwewqewqqweqqwewqewqqweqqwewqewqqweqqwewqewqqweqqqweqqwewqewqwewqewqqweqqwewqewqqweqqwewqewqqweqqwewqewqqweqqqweq',
+    content: '背单词100个！',
     date: '2019-2-19',
     time: '12:30',
     rate: 2,
