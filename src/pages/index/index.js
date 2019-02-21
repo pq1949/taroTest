@@ -30,7 +30,7 @@ export default class Index extends Component {
   }
 
   swiperChange (e) {
-    const current = e.target.current
+    const current = (e.target && e.target.current) || e.detail.current
     this.setState({
       current
     })
@@ -63,6 +63,7 @@ export default class Index extends Component {
           src={bg}
         />
         <Swiper
+          className='Swiper'
           duration={200}
           onChange={this.swiperChange.bind(this)}
           current={this.state.current}

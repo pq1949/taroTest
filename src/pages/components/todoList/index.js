@@ -130,7 +130,7 @@ export default class TodoList extends Component {
   render () {
     return (
       <View className='todo_list'>
-        <View className='add_task_button' onClick={this.showAddTask} >
+        <View className='add_task_button' onClick={this.showAddTask.bind(this)} >
           <AtIcon value='add' size='50' color='#fff' />
         </View>
         <AtFloatLayout className='float_layout' isOpened={this.state.isOpened} title='添加任务' onClose={this.showAddTask}>
