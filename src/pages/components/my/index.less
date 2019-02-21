@@ -1,0 +1,41 @@
+.my {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 130px);
+  justify-content: space-around;
+
+  .layout_content {
+    height: 800px;
+    word-wrap: break-word;
+    overflow: scroll;
+    white-space: pre-wrap;
+    font-size: 30px;
+  }
+
+  .user {
+    display: flex;
+    justify-content: space-around;
+    .user_info {
+      background: #c6cfff;
+      font-size: 24px;
+      border-radius: 50%;
+      height: 100px;
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .base {
+    view {
+      border: none;
+      border-radius: 0;
+    }
+  }
+
+  .reset {
+    view {
+      background: #f07c82;
+    }
+  }
+}

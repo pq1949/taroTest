@@ -1,14 +1,22 @@
 .index {
   height: 100%;
   swiper {
-    height: 100%;
-    z-index: -1;
+    position: relative;
+    top: 150px;
+    height: calc(100% - 150px);
+    z-index: 1;
   }
+
   .tab_bar {
     height: 120px;
   }
-}
 
-.swiper-no-swiping {
-  pointer-events: none;
+  .bg_img {
+    position: fixed;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    opacity: .5;
+    filter: blur(8px);
+  }
 }

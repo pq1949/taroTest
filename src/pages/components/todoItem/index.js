@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtIcon, AtRate } from "taro-ui"
+import dayjs from 'dayjs'
 import './index.less'
 
 export default class TodoItem extends Component {
@@ -40,15 +41,21 @@ export default class TodoItem extends Component {
     }, 300)
   }
   render () {
-    const { content, date, time, rate, color } = this.props
+    const { content, date, time, rate, color, name } = this.props
     return (
       <View className='todo_item' animation={this.state.animationData} >
         <View className='item' style={{ background: color }}>
           <View className='content'>{content}</View>
           <View className='info'>
             <View className='date_time'>
-              <AtIcon value='calendar' size='25' ></AtIcon>
-              <Text className='text'>{`${date} ${time}`}</Text>
+              <View className='start_time'>
+                <AtIcon value='play' size='15' ></AtIcon>
+                <Text className='text' >{dayjs(name).format('YYYY-MM-DD HH:mm')}</Text>
+              </View>
+              <View className='end_time'>
+                <AtIcon value='sketch' size='15' ></AtIcon>
+                <Text className='text' style={{color: Date.now > dayjs(`${date} ${time}`).valueOf() ? 'red': ''}}>{`${date} ${time}`}</Text>
+              </View>
             </View>
             <View className='rate'>
               <AtIcon value='tags' size='25' ></AtIcon>

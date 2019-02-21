@@ -1,39 +1,43 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Picker, Text } from '@tarojs/components'
 import dayjs from 'dayjs'
-import { AtButton, AtInput, AtFloatLayout, AtIcon, AtRate } from 'taro-ui'
+import { AtButton, AtInput, AtFloatLayout, AtIcon, AtRate, AtSearchBar } from 'taro-ui'
 import ToDoItem from '../todoItem'
 import './index.less'
 
 export default class TodoList extends Component {
+
+  static defaultProps = {
+    onUpdateTotalNum: () => { }
+  }
   constructor () {
     super(...arguments)
     this.state = {
       value: '',
+      searchValue: '',
       isOpened: false,
       time: dayjs().add(90, 'minute').format('HH:mm'),
       date: dayjs().add(90, 'minute').isAfter(dayjs(), 'day') ? dayjs().add(1, 'day').format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
       rate: 0,
       items: []
     }
+    this.colors = ['#45aaf2', '#4f9da6', '#c6cfff', '#f6b8d1', '#bf81ff', '#6d70c6', '#0ea5c6', '#009f9d', '#9692af', '#db996c']
   }
 
   componentDidMount () {
-    // const t = []
-    // for (let i = 0; i < 0; i++) {
-    //   t.push({
-    //     id: i,
-    //     content: `背单词${100 + i}个！`,
-    //     date: '2019-2-19',
-    //     time: '12:30',
-    //     rate: 2,
-    //     color: '#45aaf2'
-    //   })
-    // }
-    // this.setState({
-    //   items: t
-    // })
+    this.setState({
+      items: Taro.getStorageSync('items') || []
+    }, () => {
+      this.props.onUpdateTotalNum(this.state.items.length)
+      Taro.eventCenter.trigger('updateHistory')
+    })
 
+    Taro.eventCenter.on('updateItems', () => {
+      this.setState({
+        items: []
+      })
+      this.props.onUpdateTotalNum(0)
+    })
   }
 
   onChange (value) {
@@ -42,7 +46,11 @@ export default class TodoList extends Component {
 
   showAddTask () {
     this.setState(preState => ({
-      isOpened: !preState.isOpened
+      isOpened: !preState.isOpened,
+      time: dayjs().add(90, 'minute').format('HH:mm'),
+      date: dayjs().add(90, 'minute').isAfter(dayjs(), 'day') ? dayjs().add(1, 'day').format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
+      rate: 0,
+      value: ''
     }))
   }
 
@@ -62,11 +70,13 @@ export default class TodoList extends Component {
     this.setState({ rate })
   }
 
+  getColor () {
+    const len = this.colors.length
+    return this.colors[~~(Math.random() * len)]
+  }
   addTask () {
-    console.log('111')
     const { value, time, date, rate } = this.state
     if (value) {
-      console.log(this.state)
       this.setState(preState => ({
         items: preState.items.concat({
           id: Date.now(),
@@ -74,27 +84,60 @@ export default class TodoList extends Component {
           date,
           time,
           rate,
-          color: '#45aaf2'
+          color: this.getColor()
         }),
         isOpened: false
-      }))
+      }), () => {
+        Taro.setStorageSync('items', this.state.items)
+        this.props.onUpdateTotalNum(this.state.items.length)
+      })
+    } else {
+      this.setState({
+        isOpened: false
+      })
     }
   }
 
+
   onItemFinish (id) {
-    this.setState(preState => ({
-      items: preState.items.filter(item => item.id !== id)
-    }))
+    this.setState(preState => {
+      const history = Taro.getStorageSync('history') || []
+      Taro.setStorageSync('history', history.concat({
+        ...preState.items.filter(item => item.id === id)[0],
+        finishTime: Date.now()
+      }))
+      Taro.eventCenter.trigger('updateHistory')
+      return {
+        items: preState.items.filter(item => item.id !== id)
+      }
+    }, () => {
+      Taro.setStorageSync('items', this.state.items)
+      this.props.onUpdateTotalNum(this.state.items.length)
+    })
   }
+
+  sortItem (a, b) {
+    return a.id < b.id
+  }
+
+  onSearchChange (searchValue) {
+    this.setState({
+      searchValue,
+      items: (Taro.getStorageSync('items') || []).filter(item => ~item.content.indexOf(searchValue))
+    })
+  }
+
   render () {
-    console.log(this.state)
     return (
       <View className='todo_list'>
-        <View className='add_task_button' onClick={this.showAddTask} ><AtIcon value='add' size='50' color='#fff'></AtIcon></View>
+        <View className='add_task_button' onClick={this.showAddTask} >
+          <AtIcon value='add' size='50' color='#fff' />
+        </View>
         <AtFloatLayout className='float_layout' isOpened={this.state.isOpened} title='添加任务' onClose={this.showAddTask}>
           <AtInput
             clear
             focus={this.state.isOpened}
+            cursorSpacing={266}
             name='value'
             type='text'
             value={this.state.value}
@@ -123,10 +166,20 @@ export default class TodoList extends Component {
           <AtButton circle type='primary' onClick={this.addTask}>添加</AtButton>
         </AtFloatLayout>
         {
-          !this.state.items.length && <View className='empty'>还没有添加过任务~~</View>
+          (this.state.items.length || this.state.searchValue) && <AtSearchBar
+            onChange={this.onSearchChange.bind(this)}
+            value={this.state.searchValue}
+            showActionButton={false}
+          />
         }
         {
-          this.state.items.map(item => (
+          !this.state.items.length && !this.state.searchValue && <View className='empty'>还没有添加过任务~~</View>
+        }
+        {
+          !this.state.items.length && this.state.searchValue && <View className='empty'>没有搜索到相关任务~~</View>
+        }
+        {
+          this.state.items.sort(this.sortItem.bind(this)).map(item => (
             <ToDoItem
               key={item.id}
               name={item.id}
